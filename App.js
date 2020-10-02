@@ -8,7 +8,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import RootNavigator from "./src/navigation";
 import { store, persistor } from "./src/store";
 
-import "./firebaseInstance";
 import { PersistGate } from "redux-persist/integration/react";
 
 class App extends React.Component {

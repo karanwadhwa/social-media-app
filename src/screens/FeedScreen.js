@@ -1,22 +1,17 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import firebase from "firebase";
+import { connect } from "react-redux";
+import { logoutUser } from "../store/Actions/authActions";
 
 class FeedScreen extends Component {
-  logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(res => console.log("signed out", res));
-  };
-
   render() {
     return (
       <View>
         <Text> Feeds Screen </Text>
 
         <TouchableOpacity
-          onPress={this.logout}
+          onPress={this.props.logoutUser}
           style={{
             margin: 30,
             padding: 24,
@@ -30,5 +25,9 @@ class FeedScreen extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {};
+};
 
-export default FeedScreen;
+const mapDispatchToProps = { logoutUser };
+export default connect(mapStateToProps, mapDispatchToProps)(FeedScreen);

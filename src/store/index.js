@@ -6,6 +6,10 @@ import AsyncStorage from "@react-native-community/async-storage";
 import reactotron from "../../ReactotronConfig";
 import rootReducer from "./Reducers";
 
+import { authListener } from "./Actions/authActions";
+
+import "../../firebaseInstance";
+
 const middlewares = [];
 
 middlewares.push(applyMiddleware(ReduxThunk));
@@ -31,5 +35,7 @@ export const store = createStore(
   initialState,
   compose(...middlewares)
 );
+
+store.dispatch(authListener());
 
 export const persistor = persistStore(store);
