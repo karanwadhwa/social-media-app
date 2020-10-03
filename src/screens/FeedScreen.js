@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
-import firebase from "firebase";
 import { connect } from "react-redux";
 import { logoutUser } from "../store/Actions/authActions";
 

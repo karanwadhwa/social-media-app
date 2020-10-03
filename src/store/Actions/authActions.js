@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import "firebase/firestore";
 import { FIRESTORE } from "../../../firebaseInstance";
+import { updateUserStatus } from "../../fbCRUD";
 
 import { AUTH_ERROR, AUTH_LOADING, LOGIN, LOGOUT } from "../types";
 
@@ -16,13 +17,18 @@ export const loginUser = (email, password) => dispatch => {
 
 export const authListener = () => dispatch =>
   firebase.auth().onAuthStateChanged(user => {
-    if (user) dispatch({ type: LOGIN, payload: user });
-    else dispatch(logoutUser());
+    if (user) {
+      updateUserStatus("online");
+      dispatch({ type: LOGIN, payload: user });
+    } else dispatch(logoutUser());
   });
 
-export const logoutUser = () => dispatch => {
-  firebase.auth().signOut();
-  dispatch({ type: LOGOUT });
+export const logoutUser = () => async dispatch => {
+  // update user status before logging out
+  const userObj = await updateUserStatus("offline").then(user => {
+    firebase.auth().signOut();
+    dispatch({ type: LOGOUT });
+  });
 };
 
 export const signupUser = (name, email, password) => dispatch => {
